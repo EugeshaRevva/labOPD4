@@ -1,6 +1,3 @@
-# Лабораторная работа 4
-# Ревва Евгений
-# Вариант 8
 import unittest
 from lr3 import app
 
@@ -13,11 +10,11 @@ class FlaskAppTestCase(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_index_get(self):
+    def test_get(self):
         response = self.app.get('/')
         self.assertEqual(response.status_code, 200)
 
-    def test_index_post(self):
+    def test_post(self):
         data = {
             'name': 'Лера',
             'answer1': 'Красная панда',
@@ -25,5 +22,15 @@ class FlaskAppTestCase(unittest.TestCase):
         }
         response = self.app.post('/', data=data)
         self.assertIn('Спасибо за ответы!'.encode('utf-8'), response.data)
+
+    def test_empty(self):
+        data = {
+            'name': '',
+            'answer1': 'Кошка',
+            'answer2': 'Пушистая'
+        }
+        response = self.app.post('/', data=data)
+        self.assertEqual(response.status_code, 200)
+
 if __name__ == '__main__':
     unittest.main()
